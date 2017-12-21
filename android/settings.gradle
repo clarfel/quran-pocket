@@ -1,0 +1,3 @@
+rootProject.name = 'quran_pocket'
+
+include ':app'
