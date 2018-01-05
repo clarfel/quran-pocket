@@ -49,6 +49,13 @@
 		0281B3C817E34086B3508B42 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75FCE8BDE38A49299DCE163A /* SimpleLineIcons.ttf */; };
 		3DAA0AF2AB3648F9A413528B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D50DC19C46C4ECE9ECFE5B4 /* Zocial.ttf */; };
 		E38432467BC444E89E90DCF7 /* Uthmanic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C41F5C90C954054B1B8D892 /* Uthmanic.otf */; };
+		B863ABBDF79D405D80D12DD2 /* naskh.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4A7BED1894AD46CCB1D51386 /* naskh.otf */; };
+		FE946F83B37F439D8BB577D6 /* quran.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4B6C9192D3F745EFB7D4EC91 /* quran.otf */; };
+		A41210B1BB2A49B4ADB5F23B /* scheherazade.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EDF2EA25FF94373BC390E1A /* scheherazade.ttf */; };
+		93A84646DE1045BC9994776E /* uthmanic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 82AE04AA075E4E99B1F18DC2 /* uthmanic.otf */; };
+		33BA475EB5E340A7960EA07C /* quran_common.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7719D88A2A449D2A10A7675 /* quran_common.ttf */; };
+		878C431391FB4A1AA596B456 /* Amiri-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BC20CA9B1A1E48B08BD9BFC5 /* Amiri-Regular.ttf */; };
+		78BE86FF9C8E42F8886DA755 /* AmiriQuran.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1EF0959BA9A471D8B5E4969 /* AmiriQuran.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -289,6 +296,13 @@
 		75FCE8BDE38A49299DCE163A /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		5D50DC19C46C4ECE9ECFE5B4 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		2C41F5C90C954054B1B8D892 /* Uthmanic.otf */ = {isa = PBXFileReference; name = "Uthmanic.otf"; path = "../assets/fonts/Uthmanic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4A7BED1894AD46CCB1D51386 /* naskh.otf */ = {isa = PBXFileReference; name = "naskh.otf"; path = "../assets/fonts/naskh.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4B6C9192D3F745EFB7D4EC91 /* quran.otf */ = {isa = PBXFileReference; name = "quran.otf"; path = "../assets/fonts/quran.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0EDF2EA25FF94373BC390E1A /* scheherazade.ttf */ = {isa = PBXFileReference; name = "scheherazade.ttf"; path = "../assets/fonts/scheherazade.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		82AE04AA075E4E99B1F18DC2 /* uthmanic.otf */ = {isa = PBXFileReference; name = "uthmanic.otf"; path = "../assets/fonts/uthmanic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A7719D88A2A449D2A10A7675 /* quran_common.ttf */ = {isa = PBXFileReference; name = "quran_common.ttf"; path = "../assets/fonts/quran_common.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BC20CA9B1A1E48B08BD9BFC5 /* Amiri-Regular.ttf */ = {isa = PBXFileReference; name = "Amiri-Regular.ttf"; path = "../assets/fonts/Amiri-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C1EF0959BA9A471D8B5E4969 /* AmiriQuran.ttf */ = {isa = PBXFileReference; name = "AmiriQuran.ttf"; path = "../assets/fonts/AmiriQuran.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -547,6 +561,13 @@
 				75FCE8BDE38A49299DCE163A /* SimpleLineIcons.ttf */,
 				5D50DC19C46C4ECE9ECFE5B4 /* Zocial.ttf */,
 				2C41F5C90C954054B1B8D892 /* Uthmanic.otf */,
+				4A7BED1894AD46CCB1D51386 /* naskh.otf */,
+				4B6C9192D3F745EFB7D4EC91 /* quran.otf */,
+				0EDF2EA25FF94373BC390E1A /* scheherazade.ttf */,
+				82AE04AA075E4E99B1F18DC2 /* uthmanic.otf */,
+				A7719D88A2A449D2A10A7675 /* quran_common.ttf */,
+				BC20CA9B1A1E48B08BD9BFC5 /* Amiri-Regular.ttf */,
+				C1EF0959BA9A471D8B5E4969 /* AmiriQuran.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -934,6 +955,13 @@
 				0281B3C817E34086B3508B42 /* SimpleLineIcons.ttf in Resources */,
 				3DAA0AF2AB3648F9A413528B /* Zocial.ttf in Resources */,
 				E38432467BC444E89E90DCF7 /* Uthmanic.otf in Resources */,
+				B863ABBDF79D405D80D12DD2 /* naskh.otf in Resources */,
+				FE946F83B37F439D8BB577D6 /* quran.otf in Resources */,
+				A41210B1BB2A49B4ADB5F23B /* scheherazade.ttf in Resources */,
+				93A84646DE1045BC9994776E /* uthmanic.otf in Resources */,
+				33BA475EB5E340A7960EA07C /* quran_common.ttf in Resources */,
+				878C431391FB4A1AA596B456 /* Amiri-Regular.ttf in Resources */,
+				78BE86FF9C8E42F8886DA755 /* AmiriQuran.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

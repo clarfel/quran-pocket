@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Container, Header, Item, Icon, Input, Spinner } from 'native-base'
 import { connect } from 'react-redux';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import * as ChapterActions from '../redux/ducks/chapterRedux';
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   arabicTxt: {
-    fontFamily: 'Uthmanic',
+    fontFamily: 'quran',
     fontSize: 24,
   },
   subTxt: {
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
   }
-})
+});
 
 class HomeScreen extends Component {
   componentWillMount() {
@@ -40,8 +41,8 @@ class HomeScreen extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { chapters } = nextProps;
-    if (chapters === this.props.chapters) {
+    const { chapters, isFetching } = nextProps;
+    if (chapters === this.props.chapters && isFetching === this.props.isFetching) {
       return false;
     }
     return true;
@@ -62,24 +63,34 @@ class HomeScreen extends Component {
           </View>
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 
   render() {
-    const { chapters, navigation } = this.props;
+    const { chapters, navigation, isFetching } = this.props;
 
     return (
-      <FlatList 
-        data={chapters}
-        renderItem={({ item }) => this.renderChapterList(item, navigation)}
-        keyExtractor={() => Math.random()}
-      />
+      <Container>
+        <Header searchBar rounded>
+          <Item>
+            <Icon active name="search" />
+            <Input placeholder="Search" />
+          </Item>
+        </Header>
+        {isFetching && <Spinner color={'blue'} />}
+        <FlatList 
+          data={chapters}
+          renderItem={({ item }) => this.renderChapterList(item, navigation)}
+          keyExtractor={() => Math.random()}
+        />
+      </Container>
     );
   }
 }
 
 const mapStateToProps = state => ({
   chapters: state.quran.chapters,
+  isFetching: state.quran.isFetchingAllChapters,
 })
 
 const mapDispatchToProps = {

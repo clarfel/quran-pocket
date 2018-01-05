@@ -65,7 +65,13 @@
 		<string>rubicon-icon-font.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
-		<string>Uthmanic.otf</string>
+		<string>naskh.otf</string>
+		<string>quran.otf</string>
+		<string>scheherazade.ttf</string>
+		<string>uthmanic.otf</string>
+		<string>quran_common.ttf</string>
+		<string>Amiri-Regular.ttf</string>
+		<string>AmiriQuran.ttf</string>
 	</array>
 </dict>
 </plist>

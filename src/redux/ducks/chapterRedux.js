@@ -13,7 +13,7 @@ export const getAllChapterSuccess = payload => ({ type: FETCH_ALL_CHAPTER_SUCCES
 export const getChapterSuccess = payload => ({ type: FETCH_CHAPTER_SUCCESS, payload });
 
 const initialState = {
-  isFetchingAllChapter: false,
+  isFetchingAllChapters: false,
   chapters: [],
   surah: [],
   isFetchingChapter: false,
@@ -30,13 +30,13 @@ export default function reducer(state = initialState, action = {}) {
     case FETCH_ALL_CHAPTERS:
       return {
         ...state,
-        isFetchingAllChapter: true,
+        isFetchingAllChapters: true,
       }
     case FETCH_ALL_CHAPTER_SUCCESS:
       return {
         ...state,
         chapters: action.payload,
-        isFetchingAllChapter: false,
+        isFetchingAllChapters: false,
       }
     case FETCH_CHAPTER_SUCCESS:
       return {
@@ -47,7 +47,7 @@ export default function reducer(state = initialState, action = {}) {
     case FETCH_ALL_CHAPTER_FAIL:
       return {
         ...state,
-        isFetchingAllChapter: false,
+        isFetchingAllChapters: false,
         error: action.payload,
       }
     case FETCH_CHAPTER_FAIL:
