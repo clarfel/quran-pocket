@@ -78,7 +78,7 @@ class HomeScreen extends Component {
     let filteredChapters = chapters.filter((chapter) => {
       return chapter.name_simple.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
     });
-    console.log(searchKey);
+
     return (
       <Container>
         <Header searchBar rounded>
