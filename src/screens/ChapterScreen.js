@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Container, Header, Body, Title, Left, Right, Button, Icon, Spinner } from 'native-base';
+import { Container, Header, Body, Title, Left, Right, Button, Icon, Spinner, ListItem, CheckBox } from 'native-base';
 import { Text, View, ScrollView, FlatList, StyleSheet, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
-import * as ChapterAction from '../redux/ducks/chapterRedux';
+import { MenuProvider, Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
+import * as ChapterActions from '../redux/ducks/chapterRedux';
+import * as SettingActions from '../redux/ducks/settingRedux';
 import { toArabicNumber } from '../utils/arabicText';
 
 const styles = StyleSheet.create({
@@ -29,6 +31,20 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingHorizontal: 12,
     paddingTop: 2,
+  },
+  titleContainer: {
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: 'silver',
+    paddingVertical: 8,
+  },
+  titleTxt: {
+    fontFamily: 'AmiriQuran',
+    fontSize: 28,
+  },
+  titleHeaderTxt: {
+    fontFamily: 'AmiriQuran',
+    fontSize: 22,
   }
 });
 
@@ -39,8 +55,8 @@ class ChapterScreen extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { surah, isFetching } = nextProps;
-    if (surah === this.props.surah && isFetching === this.props.isFetching) {
+    const { surah, isFetching, isNightMode } = nextProps;
+    if (surah === this.props.surah && isFetching === this.props.isFetching && isNightMode === this.props.isNightMode) {
       return false;
     }
     return true;
@@ -72,37 +88,86 @@ class ChapterScreen extends Component {
     )
   }
 
-  render() {
-    const { surah, navigation, isFetching } = this.props;
-    
+  nightModeAction() {
+    console.log("change to night mode");
+    const { isNightMode } = this.props;
+    console.log(isNightMode);
+    if (isNightMode) {
+      this.props.setNormalMode();
+    } else {
+      this.props.setNightMode();
+    }
+  }
+
+  renderMenu() {
+    const { isNightMode } = this.props;
     return (
-      <Container>
-        <Header>
-          <Left>
-            <Button
-              onPress={() => navigation.goBack()} 
-              transparent>
-              <Icon name='arrow-back' style={{ color: 'white' }} />
-            </Button>
-          </Left>
-          <Body style={{ alignItems: 'flex-end' }}>
-            <Title>
-              {surah.name}
-            </Title>
-          </Body>
-          <Right/>
-        </Header>
-        {isFetching && <Spinner color={'blue'} />}
-        {!isFetching && surah && 
-          <ScrollView>
-            <FlatList 
-              data={surah}
-              renderItem={({ item }) => this.renderAyahs(item)}
-              keyExtractor={() => Math.random()}
-            />
-          </ScrollView>
-        }
-      </Container>
+      <Menu>
+        <MenuTrigger>
+          <Icon name='md-more' style={{ color: 'white' }} />
+        </MenuTrigger>
+        <MenuOptions>
+          <MenuOption onSelect={() => alert(`Save`)}>
+            <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', paddingVertical: 4 }}>
+              <Text style={{ marginLeft: 8 }}>Jump to verse..</Text>
+            </View>
+          </MenuOption>
+          <MenuOption onSelect={() => this.nightModeAction()} >
+            <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', paddingVertical: 4 }}>
+              <CheckBox checked={isNightMode}/>
+              <Text style={{ marginLeft: 16 }}>Night Mode</Text>
+            </View>
+          </MenuOption>
+        </MenuOptions>
+      </Menu>
+    );
+  }
+
+  renderBismillah() {
+    return (
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleTxt}>{'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ'}</Text>
+      </View>
+    )
+  }
+
+  render() {
+    const { surah, navigation, isFetching, isNightMode } = this.props;
+    const { bismillah_pre, name_arabic } = navigation.state.params;
+    console.log("bismillah_pre", bismillah_pre);
+    return (
+      <MenuProvider>
+        <Container>
+          <Header>
+            <Left>
+              <Button
+                onPress={() => navigation.goBack()} 
+                transparent>
+                <Icon name='arrow-back' style={{ color: 'white' }} />
+              </Button>
+            </Left>
+            <Body style={{ alignItems: 'flex-end' }}>
+              <Title style={styles.titleHeaderTxt}>
+                {name_arabic}
+              </Title>
+            </Body>
+            <Right>
+              {this.renderMenu()}
+            </Right>
+          </Header>
+          {isFetching && <Spinner color={'blue'} />}
+          {!isFetching && surah && 
+            <ScrollView>
+              {bismillah_pre && this.renderBismillah()}
+              <FlatList 
+                data={surah}
+                renderItem={({ item }) => this.renderAyahs(item)}
+                keyExtractor={() => Math.random()}
+              />
+            </ScrollView>
+          }
+        </Container>
+      </MenuProvider>
     );
   }
 }
@@ -110,10 +175,13 @@ class ChapterScreen extends Component {
 const mapStateToProps = state => ({
   surah: state.quran.surah,
   isFetching: state.quran.isFetchingChapter,
+  isNightMode: state.setting.isNightMode,
 });
 
 const mapDispatchToProps = {
-  getChapter: ChapterAction.getChapter,
+  getChapter: ChapterActions.getChapter,
+  setNightMode: SettingActions.setNightMode,
+  setNormalMode: SettingActions.setNormalMode,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChapterScreen);

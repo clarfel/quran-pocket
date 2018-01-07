@@ -6,7 +6,7 @@ class QuranApi {
   static getAllQuranChapters() {
     return axios
       .create({
-        baseURL: API.baseURL.translations,
+        baseURL: API.baseURL.chapters,
       })
       .get(API.endpoints.chapters)
       .then(response => response.data)
@@ -14,7 +14,7 @@ class QuranApi {
   }
 
   static getQuranChapter(id) {
-    const path = `${API.endpoints.chapters}/${id}/${API.endpoints.quran_id}?key=${API_KEY}`;
+    const path = `${API.endpoints.chapter}/${id}/${API.endpoints.quran_id}?key=${API_KEY}`;
     console.log(path);
     return axios
       .create({

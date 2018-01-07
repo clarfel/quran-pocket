@@ -5,9 +5,9 @@ import { quranApi } from '../../api';
 
 function* fetchAllChapters() {
   try {
-    const { code, status, data } = yield call(quranApi.getAllQuranChapters);
-    if (code === 200 && status === 'OK' && data) {
-      yield put(getAllChapterSuccess(data));
+    const { chapters } = yield call(quranApi.getAllQuranChapters);
+    if (!isEmpty(chapters)) {
+      yield put(getAllChapterSuccess(chapters));
     }
   } catch(e) {
     yield put(getAllChapterFail(e));
