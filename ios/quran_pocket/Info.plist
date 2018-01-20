@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>quran_pocket</string>
+	<string>Quran Pocket</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -53,6 +53,13 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Amiri-Regular.ttf</string>
+		<string>AmiriQuran.ttf</string>
+		<string>naskh.otf</string>
+		<string>quran_common.ttf</string>
+		<string>quran.otf</string>
+		<string>scheherazade.ttf</string>
+		<string>uthmanic.otf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
 		<string>FontAwesome.ttf</string>
@@ -65,13 +72,6 @@
 		<string>rubicon-icon-font.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
-		<string>naskh.otf</string>
-		<string>quran.otf</string>
-		<string>scheherazade.ttf</string>
-		<string>uthmanic.otf</string>
-		<string>quran_common.ttf</string>
-		<string>Amiri-Regular.ttf</string>
-		<string>AmiriQuran.ttf</string>
 	</array>
 </dict>
 </plist>
