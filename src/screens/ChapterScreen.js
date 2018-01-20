@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
     right: 10,
     top: 10,
   },
+  header: {
+    backgroundColor: '#3cb385',
+  },
 });
 
 class ChapterScreen extends Component {
@@ -147,7 +150,9 @@ class ChapterScreen extends Component {
     return (
       <MenuProvider>
         <Container>
-          <Header>
+          <Header
+            style={styles.header}
+            androidStatusBarColor="#5acea1">
             <Left>
               <Button
                 onPress={() => navigation.goBack()} 
@@ -168,7 +173,7 @@ class ChapterScreen extends Component {
               </Button>
             </Right>
           </Header>
-          {isFetching && <Spinner color={'blue'} />}
+          {isFetching && <Spinner color={'#3cb385'} />}
           {!isFetching && surah && 
             <FlatList
               ref={(ref) => { this.verses = ref; }}

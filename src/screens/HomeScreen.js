@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
   arabicTxt: {
     fontFamily: 'AmiriQuran',
     fontSize: 24,
+    color: '#333'
   },
   subTxt: {
     fontSize: 12,
@@ -33,7 +34,10 @@ const styles = StyleSheet.create({
   rightContainer: {
     flex: 1,
     alignItems: 'flex-end',
-  }
+  },
+  header: {
+    backgroundColor: '#3cb385',
+  },
 });
 
 class HomeScreen extends Component {
@@ -79,9 +83,15 @@ class HomeScreen extends Component {
       return chapter.name_simple.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
     });
 
+    console.log()
+
     return (
       <Container>
-        <Header searchBar rounded>
+        <Header
+          searchBar
+          rounded
+          style={styles.header}
+          androidStatusBarColor="#5acea1">
           <Item>
             <Icon active name="search" />
             <Input 
@@ -90,11 +100,13 @@ class HomeScreen extends Component {
             />
           </Item>
         </Header>
-        {isFetching && <Spinner color={'blue'} />}
+        {isFetching && <Spinner color={'#3cb385'} />}
         <FlatList 
           data={filteredChapters}
           renderItem={({ item }) => this.renderChapterList(item, navigation)}
           keyExtractor={() => Math.random()}
+          initialNumToRender={115}
+          disableVirtualization={true}
         />
       </Container>
     );
