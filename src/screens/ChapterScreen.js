@@ -1,55 +1,14 @@
 import React, { Component } from 'react';
 import { Container, Header, Body, Title, Left, Right, Button, Icon, Spinner, ListItem, CheckBox, Input, Item, Content } from 'native-base';
-import { Text, View, ScrollView, FlatList, StyleSheet, ImageBackground } from 'react-native';
+import { Text, View, FlatList, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { MenuProvider, Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import Modal from 'react-native-modal';
-import { Bismillah } from '../components';
+import { Bismillah, Verse } from '../components';
 import * as ChapterActions from '../redux/ducks/chapterRedux';
 import * as SettingActions from '../redux/ducks/settingRedux';
-import { toArabicNumber } from '../utils/arabicText';
 
 const styles = StyleSheet.create({
-  arabicTxt: {
-    fontFamily: 'quran',
-    fontSize: 22,
-  },
-  ayahContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderColor: 'silver',
-  },
-  ayahsContent: {
-    flex: 9,
-    alignItems: 'flex-end',
-    paddingHorizontal: 12,
-  },
-  verseNumContainer: {
-    flex: 1,
-    alignItems: 'flex-start',
-    paddingHorizontal: 12,
-    paddingTop: 2,
-  },
-  verseImage: {
-    height: 45,
-    width: 45,
-    resizeMode: 'contain',
-  },
-  verseNumTxt: {
-    fontFamily: 'naskh',
-    fontSize: 16,
-    width: 45,
-    textAlign: 'center',
-    paddingVertical: 9
-  },
-  verseNumContent: {
-    flex: 1,
-    alignItems: 'center'
-  },
   titleHeaderTxt: {
     fontFamily: 'AmiriQuran',
     fontSize: 22,
@@ -92,32 +51,6 @@ class ChapterScreen extends Component {
     this.props.getChapter(id);
   }
 
-  renderAyahs(item) {
-    const { verse, ayah } = item;
-    return (
-      <View style={styles.ayahContainer}>
-        <View style={styles.verseNumContainer}>
-          <ImageBackground
-            source={require('../../assets/images/black.png')}
-            style={{ flex: 1 }}
-            imageStyle={styles.verseImage}
-          >
-            <View style={styles.verseNumContent}>
-              <Text style={styles.verseNumTxt}>
-                {toArabicNumber(ayah)}
-              </Text>
-            </View>
-          </ImageBackground>
-        </View>
-        <View style={styles.ayahsContent}>
-          <Text style={styles.arabicTxt}>
-            {verse}
-          </Text>
-        </View>
-      </View>
-    )
-  }
-
   nightModeAction() {
     const { isNightMode } = this.props;
     if (isNightMode) {
@@ -137,7 +70,7 @@ class ChapterScreen extends Component {
     const index = parseInt(verseJump) - 1;
     const size = surah.length;
     if (index >= 0 && index < size) {
-      this.verses.scrollToIndex({animated: true, index, viewPosition: 0 });
+      this.verses.scrollToIndex({animated: true, index });
     }
     this.setState({ isModalVisible: !isModalVisible });
   }
@@ -240,9 +173,11 @@ class ChapterScreen extends Component {
             <FlatList
               ref={(ref) => { this.verses = ref; }}
               data={surah}
-              renderItem={({ item }) => this.renderAyahs(item)}
+              renderItem={({ item }) => <Verse  data={item} />}
               keyExtractor={() => Math.random()}
               ListHeaderComponent={() => this.renderHeader()}
+              initialNumToRender={300}
+              disableVirtualization={true}
             />
           }
           <Modal isVisible={isModalVisible} style={styles.bottomModal}>

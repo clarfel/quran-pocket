@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   titleTxt: {
     fontFamily: 'AmiriQuran',
     fontSize: 28,
+    color: '#222',
   },
 });
 
