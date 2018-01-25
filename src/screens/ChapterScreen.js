@@ -92,12 +92,12 @@ class ChapterScreen extends Component {
               <Text style={{ marginLeft: 8, fontSize: 18 }}>Jump to verse..</Text>
             </View>
           </MenuOption>
-          <MenuOption onSelect={() => this.nightModeAction()} >
+          {/* <MenuOption onSelect={() => this.nightModeAction()} >
             <View style={styles.menuItem}>
               <CheckBox checked={isNightMode}/>
               <Text style={{ marginLeft: 18, fontSize: 18 }}>Night Mode</Text>
             </View>
-          </MenuOption>
+          </MenuOption> */}
         </MenuOptions>
       </Menu>
     );
@@ -119,16 +119,18 @@ class ChapterScreen extends Component {
             maxLength={size}/>
         </Item>
         <Button
+          style={styles.header}
           onPress={() => this.goToVerse()}
           block>
           <Text style={{ color: 'white', fontSize: 16 }}>Go</Text>
         </Button>
         <Button
+          success
           transparent
           onPress={() => this.setState({ isModalVisible: !isModalVisible })}
           style={styles.btnClose}
         >
-          <Icon name='close' />
+          <Icon name="close"/>
         </Button>
       </View>
     );
