@@ -9,15 +9,19 @@ const styles = StyleSheet.create({
   tafsirTxt: {
     color: '#05c46b',
   },
-})
+  nightThemeTxt: {
+    color: '#77bbb1',
+  },
+});
 
 class Translation extends Component {
   render() {
-    const { data, style } = this.props;
+    const { data, style, theme } = this.props;
+    const nightThemeText = theme ? styles.nightThemeTxt : styles.tafsirTxt;
 
     return(
       <View style={[styles.tafsirContainer, style]}>
-        <Text style={styles.tafsirTxt}>{data}</Text>
+        <Text style={nightThemeText}>{data}</Text>
       </View>
     );
   }

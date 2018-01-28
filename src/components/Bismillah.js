@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Bismillah = () => {
+const Bismillah = ({ style }) => {
+  console.log(style);
   return (
     <View style={styles.titleContainer}>
-      <Text style={styles.titleTxt}>{'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ'}</Text>
+      <Text style={[styles.titleTxt, style]}>{'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ'}</Text>
     </View>
   );
 };

@@ -41,6 +41,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'silver',
   },
+  nightTheme: {
+    backgroundColor: '#303030',
+  },
+  nightThemeNavbar: {
+    backgroundColor: '#36474f',
+  },
+  nightThemeBorder: {
+    borderColor: '#000',
+  },
+  nightThemeTxt: {
+    color: '#fff',
+  },
 });
 
 class ChapterScreen extends Component {
@@ -127,36 +139,44 @@ class ChapterScreen extends Component {
 
   renderHeader() {
     const { bismillah_pre } = this.props.navigation.state.params;
+    const { isNightMode } = this.props;
+    const nightTheme = isNightMode ? styles.nightThemeTxt : null;
+    
     if (bismillah_pre) {
-      return <Bismillah />
+      return <Bismillah style={nightTheme}/>
     } 
     return null;
   }
 
   renderItem(item, index) {
-    const { translation, tafsir } = this.props;
+    const { translation, tafsir, isNightMode } = this.props;
+    const nightThemeBorder = isNightMode ? styles.nightThemeBorder : styles.border;    
+
     if (translation) {
       return (
         <View>
-          <Verse  data={item} />
-          <Translation data={tafsir[index].text} style={styles.border}/>
+          <Verse  data={item} theme={isNightMode} />
+          <Translation data={tafsir[index].text} style={nightThemeBorder} theme={isNightMode}/>
         </View>
       );
     }
-    return(<Verse  data={item} style={styles.border}/>);
+    return <Verse  data={item} style={styles.border} theme={isNightMode}/>;
   }
 
   render() {
     const { surah, navigation, isFetching, isNightMode, isFetchingTranslation } = this.props;
     const { name_arabic } = navigation.state.params;
     const { isModalVisible } = this.state;
+    const themeNavbar = isNightMode ? styles.nightThemeNavbar : styles.header;
+    const nightThemeContainer = isNightMode ? styles.nightTheme : null;    
+    const themeStatusBar = isNightMode ? '#273238' : '#5acea1';
 
     return (
       <MenuProvider>
-        <Container>
+        <Container style={nightThemeContainer}>
           <Header
-            style={styles.header}
-            androidStatusBarColor="#5acea1">
+            style={themeNavbar}
+            androidStatusBarColor={themeStatusBar}>
             <Left>
               <Button
                 onPress={() => navigation.goBack()} 
@@ -203,6 +223,8 @@ const mapStateToProps = state => ({
   tafsir: state.translation.tafsir,
   isFetching: state.quran.isFetchingChapter,
   isFetchingTranslation: state.translation.isFetchingTranslation,
+  isNightMode: state.setting.isNightMode,
+  translation: state.setting.translation,
 });
 
 const mapDispatchToProps = {

@@ -56,6 +56,24 @@ const styles = StyleSheet.create({
     marginLeft: 18, 
     fontSize: 18,
   },
+  nightTheme: {
+    backgroundColor: '#303030',
+  },
+  nightThemeTxt: {
+    color: '#ececec',
+  },
+  nightThemeArabicTxt: {
+    color: '#77bbb1',
+  },
+  nightThemeSubTxt: {
+    color: '#9c9c9c',
+  },
+  nightThemeNavbar: {
+    backgroundColor: '#36474f',
+  },
+  nightThemeBorder: {
+    borderColor: '#333',
+  }
 });
 
 class HomeScreen extends Component {
@@ -128,18 +146,24 @@ class HomeScreen extends Component {
     );
   }
 
-  renderChapterList(item, navigation) {
+  renderChapterList(item, navigation, isNightMode) {
     const { name_simple, name_arabic, verses_count, translated_name, chapter_number, bismillah_pre } = item;
     const params = { id: chapter_number, bismillah_pre, name_arabic };
+    const nightThemeContainer = isNightMode ? styles.nightTheme : null;
+    const nightThemeBorder = isNightMode ? styles.nightThemeBorder : null;
+    const nightThemeText = isNightMode ? styles.nightThemeTxt : null;
+    const nightThemeSubText = isNightMode ? styles.nightThemeSubTxt : null;
+    const nightThemeArabicText = isNightMode ? styles.nightThemeArabicTxt : null;
+
     return (
       <TouchableOpacity onPress={() => navigation.navigate('Chapter', params)}>
-        <View style={styles.listContainer}>
+        <View style={[styles.listContainer, nightThemeContainer, nightThemeBorder]}>
           <View style={styles.leftContainer}>
-            <Text style={styles.titleTxt}>{name_simple}</Text>
-            <Text style={styles.subTxt}>{translated_name.name} ({verses_count})</Text>
+            <Text style={[styles.titleTxt, nightThemeText]}>{name_simple}</Text>
+            <Text style={[styles.subTxt, nightThemeSubText]}>{translated_name.name} ({verses_count})</Text>
           </View>
           <View style={styles.rightContainer}>
-            <Text style={styles.arabicTxt}>{name_arabic}</Text>
+            <Text style={[styles.arabicTxt, nightThemeArabicText]}>{name_arabic}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -147,19 +171,22 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const { chapters, navigation, isFetching } = this.props;
+    const { chapters, navigation, isFetching, isNightMode } = this.props;
     const { searchKey, isModalVisible } = this.state;
     let filteredChapters = chapters.filter((chapter) => {
       return chapter.name_simple.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
     });
+    const themeNavbar = isNightMode ? styles.nightThemeNavbar : styles.header;
+    const themeStatusBar = isNightMode ? '#273238' : '#5acea1';
+    const nightThemeContainer = isNightMode ? styles.nightTheme : null;    
 
     return (
-      <Container>
+      <Container style={nightThemeContainer}>
         <Header
           searchBar
           rounded
-          style={styles.header}
-          androidStatusBarColor="#5acea1">
+          style={themeNavbar}
+          androidStatusBarColor={themeStatusBar}>
           <Item style={{ flex: 6 }}>
             <Icon active name="search" />
             <Input
@@ -178,7 +205,7 @@ class HomeScreen extends Component {
         {isFetching && <Spinner color={'#3cb385'} />}
         <FlatList 
           data={filteredChapters}
-          renderItem={({ item }) => this.renderChapterList(item, navigation)}
+          renderItem={({ item }) => this.renderChapterList(item, navigation, isNightMode)}
           keyExtractor={() => Math.random()}
           initialNumToRender={115}
           disableVirtualization={true}

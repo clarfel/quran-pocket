@@ -42,30 +42,49 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center'
   },
+  nightTheme: {
+    backgroundColor: '#303030',
+  },
+  nightThemeArabicTxt: {
+    color: '#ececec',
+  },
+  nightThemeSubTxt: {
+    color: '#9c9c9c',
+  },
+  nightThemeNavbar: {
+    backgroundColor: '#36474f',
+  },
+  nightThemeBorder: {
+    borderColor: '#333',
+  },
 });
 
 class Verse extends Component {
   render() {
-    const { data, style } = this.props;
+    const { data, style, theme } = this.props;
     const { verse, ayah } = data;
+    const nightThemeBorder = theme ? styles.nightThemeBorder : null;
+    const nightThemeArabicText = theme ? styles.nightThemeArabicTxt : null;
+    const nightThemeSubText = theme ? styles.nightThemeSubTxt : null;
+    const verseImage = theme ? require('../../assets/images/white.png') : require('../../assets/images/black.png'); 
 
     return (
-      <View style={[styles.ayahContainer, style]}>
+      <View style={[styles.ayahContainer, style, nightThemeBorder]}>
         <View style={styles.verseNumContainer}>
           <ImageBackground
-            source={require('../../assets/images/black.png')}
+            source={verseImage}
             style={{ flex: 1 }}
             imageStyle={styles.verseImage}
           >
             <View style={styles.verseNumContent}>
-              <Text style={styles.verseNumTxt}>
+              <Text style={[styles.verseNumTxt, nightThemeSubText]}>
                 {toArabicNumber(ayah)}
               </Text>
             </View>
           </ImageBackground>
         </View>
         <View style={styles.ayahsContent}>
-          <Text style={styles.arabicTxt}>
+          <Text style={[styles.arabicTxt, nightThemeArabicText]}>
             {verse}
           </Text>
         </View>
