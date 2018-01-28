@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, Icon, Input, Spinner } from 'native-base'
+import { Container, Header, Item, Icon, Input, Spinner, Button, Right, CheckBox } from 'native-base'
 import { connect } from 'react-redux';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Switch } from 'react-native';
+import Modal from 'react-native-modal';
 import * as ChapterActions from '../redux/ducks/chapterRedux';
+import * as TranslationActions from '../redux/ducks/translationRedux';
+import * as SettingActions from '../redux/ducks/settingRedux';
 
 const styles = StyleSheet.create({
   titleTxt: {
@@ -38,11 +41,27 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#3cb385',
   },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 22,
+    justifyContent: "center",
+    borderRadius: 2,
+  },
+  modalItem: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingVertical: 4,
+  },
+  modalItemTxt: {
+    marginLeft: 18, 
+    fontSize: 18,
+  },
 });
 
 class HomeScreen extends Component {
   state = {
     searchKey: '',
+    isModalVisible: false,
   }
 
   componentWillMount() {
@@ -56,6 +75,57 @@ class HomeScreen extends Component {
       return false;
     }
     return true;
+  }
+
+  toggleModal() {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  }
+
+  translationAction() {
+    const { translation } = this.props;
+    if (translation) {
+      this.props.setTranslation(false);
+    } else {
+      this.props.setTranslation(true);
+    }
+  }
+
+  nightModeAction() {
+    const { isNightMode } = this.props;
+    if (isNightMode) {
+      this.props.setNormalMode();
+    } else {
+      this.props.setNightMode();
+    }
+  }
+
+  renderSettingModal() {
+    const { translation, isNightMode } = this.props;
+
+    return (
+      <View style={styles.modalContent}>
+        <TouchableOpacity
+          onPress={() => this.translationAction()}>
+          <View style={styles.modalItem}>
+            <Switch
+              value={translation}
+              onValueChange={() => this.translationAction()}
+            />
+            <Text style={styles.modalItemTxt}>Translation</Text>     
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.nightModeAction()}>
+          <View style={styles.modalItem}>
+            <Switch
+              value={isNightMode}
+              onValueChange={() => this.nightModeAction()}
+            />
+            <Text style={{ marginLeft: 18, fontSize: 18 }}>Night Mode</Text>     
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
   }
 
   renderChapterList(item, navigation) {
@@ -78,12 +148,10 @@ class HomeScreen extends Component {
 
   render() {
     const { chapters, navigation, isFetching } = this.props;
-    const { searchKey } = this.state;
+    const { searchKey, isModalVisible } = this.state;
     let filteredChapters = chapters.filter((chapter) => {
       return chapter.name_simple.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
     });
-
-    console.log()
 
     return (
       <Container>
@@ -92,13 +160,20 @@ class HomeScreen extends Component {
           rounded
           style={styles.header}
           androidStatusBarColor="#5acea1">
-          <Item>
+          <Item style={{ flex: 6 }}>
             <Icon active name="search" />
-            <Input 
+            <Input
               placeholder="Search"
               onChangeText={(text) => this.setState({ searchKey: text })}
             />
           </Item>
+          <Right>
+            <Button
+              transparent
+              onPress={() => this.toggleModal()}>
+              <Icon name='settings' style={{ color: 'white' }} />
+            </Button>
+          </Right>
         </Header>
         {isFetching && <Spinner color={'#3cb385'} />}
         <FlatList 
@@ -108,6 +183,12 @@ class HomeScreen extends Component {
           initialNumToRender={115}
           disableVirtualization={true}
         />
+        <Modal
+          isVisible={isModalVisible}
+          onBackdropPress={() => this.setState({ isModalVisible: false })}
+        >
+          {this.renderSettingModal()}
+        </Modal>
       </Container>
     );
   }
@@ -116,10 +197,15 @@ class HomeScreen extends Component {
 const mapStateToProps = state => ({
   chapters: state.quran.chapters,
   isFetching: state.quran.isFetchingAllChapters,
+  translation: state.setting.translation,
+  isNightMode: state.setting.isNightMode,
 })
 
 const mapDispatchToProps = {
   loadChapters: ChapterActions.getAllChapter,
+  setNightMode: SettingActions.setNightMode,
+  setNormalMode: SettingActions.setNormalMode,
+  setTranslation: SettingActions.setTranslationMode,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

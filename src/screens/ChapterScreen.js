@@ -4,9 +4,9 @@ import { Text, View, FlatList, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { MenuProvider, Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import Modal from 'react-native-modal';
-import { Bismillah, Verse } from '../components';
+import { Bismillah, Verse, Translation } from '../components';
 import * as ChapterActions from '../redux/ducks/chapterRedux';
-import * as SettingActions from '../redux/ducks/settingRedux';
+import * as TranslationActions from '../redux/ducks/translationRedux';
 
 const styles = StyleSheet.create({
   titleHeaderTxt: {
@@ -37,6 +37,10 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#3cb385',
   },
+  border: {
+    borderBottomWidth: 1,
+    borderColor: 'silver',
+  },
 });
 
 class ChapterScreen extends Component {
@@ -52,15 +56,7 @@ class ChapterScreen extends Component {
   componentWillMount() {
     const { id } = this.props.navigation.state.params;
     this.props.getChapter(id);
-  }
-
-  nightModeAction() {
-    const { isNightMode } = this.props;
-    if (isNightMode) {
-      this.props.setNormalMode();
-    } else {
-      this.props.setNightMode();
-    }
+    this.props.getTranslation(id);
   }
 
   openMenu() {
@@ -79,7 +75,6 @@ class ChapterScreen extends Component {
   }
 
   renderMenu() {
-    const { isNightMode } = this.props;
     const { isModalVisible } = this.state;
     return (
       <Menu ref={(ref) => { this.menu = ref; }}>
@@ -92,12 +87,6 @@ class ChapterScreen extends Component {
               <Text style={{ marginLeft: 8, fontSize: 18 }}>Jump to verse..</Text>
             </View>
           </MenuOption>
-          {/* <MenuOption onSelect={() => this.nightModeAction()} >
-            <View style={styles.menuItem}>
-              <CheckBox checked={isNightMode}/>
-              <Text style={{ marginLeft: 18, fontSize: 18 }}>Night Mode</Text>
-            </View>
-          </MenuOption> */}
         </MenuOptions>
       </Menu>
     );
@@ -144,8 +133,21 @@ class ChapterScreen extends Component {
     return null;
   }
 
+  renderItem(item, index) {
+    const { translation, tafsir } = this.props;
+    if (translation) {
+      return (
+        <View>
+          <Verse  data={item} />
+          <Translation data={tafsir[index].text} style={styles.border}/>
+        </View>
+      );
+    }
+    return(<Verse  data={item} style={styles.border}/>);
+  }
+
   render() {
-    const { surah, navigation, isFetching, isNightMode } = this.props;
+    const { surah, navigation, isFetching, isNightMode, isFetchingTranslation } = this.props;
     const { name_arabic } = navigation.state.params;
     const { isModalVisible } = this.state;
 
@@ -175,12 +177,12 @@ class ChapterScreen extends Component {
               </Button>
             </Right>
           </Header>
-          {isFetching && <Spinner color={'#3cb385'} />}
-          {!isFetching && surah && 
+          {isFetching && isFetchingTranslation && <Spinner color={'#3cb385'} />}
+          {!isFetching && surah && !isFetchingTranslation &&
             <FlatList
               ref={(ref) => { this.verses = ref; }}
               data={surah}
-              renderItem={({ item }) => <Verse  data={item} />}
+              renderItem={({ item, index }) => this.renderItem(item, index)}
               keyExtractor={() => Math.random()}
               ListHeaderComponent={() => this.renderHeader()}
               initialNumToRender={300}
@@ -198,14 +200,14 @@ class ChapterScreen extends Component {
 
 const mapStateToProps = state => ({
   surah: state.quran.surah,
+  tafsir: state.translation.tafsir,
   isFetching: state.quran.isFetchingChapter,
-  isNightMode: state.setting.isNightMode,
+  isFetchingTranslation: state.translation.isFetchingTranslation,
 });
 
 const mapDispatchToProps = {
   getChapter: ChapterActions.getChapter,
-  setNightMode: SettingActions.setNightMode,
-  setNormalMode: SettingActions.setNormalMode,
+  getTranslation: TranslationActions.getTranslation,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChapterScreen);

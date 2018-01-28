@@ -14,8 +14,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderColor: 'silver',
   },
   ayahsContent: {
     flex: 9,
@@ -48,11 +46,11 @@ const styles = StyleSheet.create({
 
 class Verse extends Component {
   render() {
-    const { data } = this.props;
+    const { data, style } = this.props;
     const { verse, ayah } = data;
 
     return (
-      <View style={styles.ayahContainer}>
+      <View style={[styles.ayahContainer, style]}>
         <View style={styles.verseNumContainer}>
           <ImageBackground
             source={require('../../assets/images/black.png')}
