@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, ImageBackground, Text, StyleSheet } from 'react-native';
 import { toArabicNumber } from '../utils/arabicText';
 
@@ -92,5 +93,16 @@ class Verse extends Component {
     );
   }
 }
+
+Verse.propTypes = {
+  data: PropTypes.object.isRequired,
+  style: PropTypes.object,
+  theme: PropTypes.bool,
+};
+
+Verse.defaultProps = {
+  style: {},
+  theme: false,
+};
 
 export default Verse;

@@ -1,13 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Bismillah = ({ style }) => {
-  console.log(style);
   return (
     <View style={styles.titleContainer}>
       <Text style={[styles.titleTxt, style]}>{'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ'}</Text>
     </View>
   );
+};
+
+Bismillah.propTypes = {
+  style: PropTypes.object,
+};
+
+Bismillah.defaultProps = {
+  style: {},
 };
 
 const styles = StyleSheet.create({

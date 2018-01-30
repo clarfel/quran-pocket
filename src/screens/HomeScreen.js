@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Header, Item, Icon, Input, Spinner, Button, Right, CheckBox } from 'native-base'
 import { connect } from 'react-redux';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Switch } from 'react-native';
@@ -221,18 +222,29 @@ class HomeScreen extends Component {
   }
 }
 
+HomeScreen.propTypes = {
+  loadChapters: PropTypes.func.isRequired,
+  setNightMode: PropTypes.func.isRequired,
+  setNormalMode: PropTypes.func.isRequired,
+  setTranslation: PropTypes.func.isRequired,
+  chapters: PropTypes.array.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  translation: PropTypes.bool.isRequired,
+  isNightMode: PropTypes.bool.isRequired,
+};
+
 const mapStateToProps = state => ({
   chapters: state.quran.chapters,
   isFetching: state.quran.isFetchingAllChapters,
   translation: state.setting.translation,
   isNightMode: state.setting.isNightMode,
-})
+});
 
 const mapDispatchToProps = {
   loadChapters: ChapterActions.getAllChapter,
   setNightMode: SettingActions.setNightMode,
   setNormalMode: SettingActions.setNormalMode,
   setTranslation: SettingActions.setTranslationMode,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

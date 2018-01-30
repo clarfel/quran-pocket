@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -26,5 +27,16 @@ class Translation extends Component {
     );
   }
 }
+
+Translation.propTypes = {
+  data: PropTypes.string.isRequired,
+  style: PropTypes.object,
+  theme: PropTypes.bool,
+};
+
+Translation.defaultProps = {
+  style: {},
+  theme: false,
+};
 
 export default Translation;

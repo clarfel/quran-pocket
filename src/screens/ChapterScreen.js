@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Header, Body, Title, Left, Right, Button, Icon, Spinner, ListItem, CheckBox, Input, Item, Content } from 'native-base';
 import { Text, View, FlatList, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
@@ -217,6 +218,17 @@ class ChapterScreen extends Component {
     );
   }
 }
+
+ChapterScreen.propTypes = {
+  getChapter: PropTypes.func.isRequired,
+  getTranslation: PropTypes.func.isRequired,
+  surah: PropTypes.array.isRequired,
+  tafsir: PropTypes.array.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  isFetchingTranslation: PropTypes.bool.isRequired,
+  isNightMode: PropTypes.bool.isRequired,
+  translation: PropTypes.bool.isRequired,
+};
 
 const mapStateToProps = state => ({
   surah: state.quran.surah,
