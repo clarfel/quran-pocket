@@ -96,7 +96,7 @@ class Verse extends Component {
 
 Verse.propTypes = {
   data: PropTypes.object.isRequired,
-  style: PropTypes.object,
+  style: View.propTypes.style,
   theme: PropTypes.bool,
 };
 

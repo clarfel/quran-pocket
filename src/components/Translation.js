@@ -30,7 +30,7 @@ class Translation extends Component {
 
 Translation.propTypes = {
   data: PropTypes.string.isRequired,
-  style: PropTypes.object,
+  style: View.propTypes.style,
   theme: PropTypes.bool,
 };
 

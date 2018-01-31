@@ -5,7 +5,7 @@ import { Text, View, FlatList, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { MenuProvider, Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import Modal from 'react-native-modal';
-import { Bismillah, Verse, Translation } from '../components';
+import { Bismillah, Verse, Translation, Error } from '../components';
 import * as ChapterActions from '../redux/ducks/chapterRedux';
 import * as TranslationActions from '../redux/ducks/translationRedux';
 
@@ -151,7 +151,7 @@ class ChapterScreen extends Component {
 
   renderItem(item, index) {
     const { translation, tafsir, isNightMode } = this.props;
-    const nightThemeBorder = isNightMode ? styles.nightThemeBorder : styles.border;    
+    const nightThemeBorder = isNightMode ? styles.nightThemeBorder : styles.border;
 
     if (translation) {
       return (
@@ -161,12 +161,12 @@ class ChapterScreen extends Component {
         </View>
       );
     }
-    return <Verse  data={item} style={styles.border} theme={isNightMode}/>;
+    return <Verse  data={item} style={nightThemeBorder} theme={isNightMode}/>;
   }
 
   render() {
-    const { surah, navigation, isFetching, isNightMode, isFetchingTranslation } = this.props;
-    const { name_arabic } = navigation.state.params;
+    const { surah, navigation, isFetching, isNightMode, isFetchingTranslation, error } = this.props;
+    const { name_arabic, id } = navigation.state.params;
     const { isModalVisible } = this.state;
     const themeNavbar = isNightMode ? styles.nightThemeNavbar : styles.header;
     const nightThemeContainer = isNightMode ? styles.nightTheme : null;    
@@ -210,6 +210,12 @@ class ChapterScreen extends Component {
               disableVirtualization={true}
             />
           }
+          {error &&
+            <Error onPress={() => {
+              this.props.getChapter(id);
+              this.props.getTranslation(id);
+            }}/>
+            }
           <Modal isVisible={isModalVisible} style={styles.bottomModal}>
             {this.renderModalForm()}
           </Modal>
@@ -237,6 +243,7 @@ const mapStateToProps = state => ({
   isFetchingTranslation: state.translation.isFetchingTranslation,
   isNightMode: state.setting.isNightMode,
   translation: state.setting.translation,
+  error: state.quran.error,
 });
 
 const mapDispatchToProps = {

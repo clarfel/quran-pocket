@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Header, Item, Icon, Input, Spinner, Button, Right, CheckBox } from 'native-base'
 import { connect } from 'react-redux';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Switch } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Switch, TouchableWithoutFeedback } from 'react-native';
 import Modal from 'react-native-modal';
+import isEmpty from 'lodash/isEmpty';
+import { Error } from '../components';
 import * as ChapterActions from '../redux/ducks/chapterRedux';
 import * as TranslationActions from '../redux/ducks/translationRedux';
 import * as SettingActions from '../redux/ducks/settingRedux';
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
   },
   nightThemeBorder: {
     borderColor: '#333',
-  }
+  },
 });
 
 class HomeScreen extends Component {
@@ -147,6 +149,20 @@ class HomeScreen extends Component {
     );
   }
 
+  renderChapters(data) {
+    const { navigation, isNightMode } = this.props;
+
+    return (
+      <FlatList 
+        data={data}
+        renderItem={({ item }) => this.renderChapterList(item, navigation, isNightMode)}
+        keyExtractor={() => Math.random()}
+        initialNumToRender={115}
+        disableVirtualization={true}
+      />
+    );
+  }
+
   renderChapterList(item, navigation, isNightMode) {
     const { name_simple, name_arabic, verses_count, translated_name, chapter_number, bismillah_pre } = item;
     const params = { id: chapter_number, bismillah_pre, name_arabic };
@@ -172,14 +188,15 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const { chapters, navigation, isFetching, isNightMode } = this.props;
+    const { chapters, navigation, isFetching, isNightMode, error } = this.props;
     const { searchKey, isModalVisible } = this.state;
     let filteredChapters = chapters.filter((chapter) => {
       return chapter.name_simple.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
     });
     const themeNavbar = isNightMode ? styles.nightThemeNavbar : styles.header;
     const themeStatusBar = isNightMode ? '#273238' : '#5acea1';
-    const nightThemeContainer = isNightMode ? styles.nightTheme : null;    
+    const nightThemeContainer = isNightMode ? styles.nightTheme : null;
+    const isError = error && isEmpty(chapters);
 
     return (
       <Container style={nightThemeContainer}>
@@ -204,13 +221,7 @@ class HomeScreen extends Component {
           </Right>
         </Header>
         {isFetching && <Spinner color={'#3cb385'} />}
-        <FlatList 
-          data={filteredChapters}
-          renderItem={({ item }) => this.renderChapterList(item, navigation, isNightMode)}
-          keyExtractor={() => Math.random()}
-          initialNumToRender={115}
-          disableVirtualization={true}
-        />
+        {!isError ? this.renderChapters(filteredChapters) : <Error  onPress={() => this.props.loadChapters()}/>}
         <Modal
           isVisible={isModalVisible}
           onBackdropPress={() => this.setState({ isModalVisible: false })}
@@ -231,6 +242,7 @@ HomeScreen.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   translation: PropTypes.bool.isRequired,
   isNightMode: PropTypes.bool.isRequired,
+  error: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -238,6 +250,7 @@ const mapStateToProps = state => ({
   isFetching: state.quran.isFetchingAllChapters,
   translation: state.setting.translation,
   isNightMode: state.setting.isNightMode,
+  error: state.quran.error,
 });
 
 const mapDispatchToProps = {

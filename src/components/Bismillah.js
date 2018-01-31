@@ -11,7 +11,7 @@ const Bismillah = ({ style }) => {
 };
 
 Bismillah.propTypes = {
-  style: PropTypes.object,
+  style: View.propTypes.style,
 };
 
 Bismillah.defaultProps = {

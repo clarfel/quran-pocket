@@ -12,7 +12,6 @@ function* fetchTranslation({ payload }) {
       yield put(getTranslationFail('Unable to load translation'));
     }
   } catch(e) {
-    console.log(e);
     yield put(getTranslationFail(e));
   }
 }

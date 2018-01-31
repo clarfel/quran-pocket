@@ -7,6 +7,7 @@ class QuranApi {
     return axios
       .create({
         baseURL: API.baseURL.chapters,
+        timeout: 120000,
       })
       .get(API.endpoints.chapters)
       .then(response => response.data)
@@ -18,6 +19,7 @@ class QuranApi {
     return axios
       .create({
         baseURL: API.baseURL.quran,
+        timeout: 120000,
       })
       .get(path)
       .then(response => response.data)
@@ -29,6 +31,7 @@ class QuranApi {
     return axios
       .create({
         baseURL: API.baseURL.translations,
+        timeout: 120000,
       })
       .get(path)
       .then(response => response.data)

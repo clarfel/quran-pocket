@@ -17,7 +17,7 @@ const initialState = {
   chapters: [],
   surah: [],
   isFetchingChapter: false,
-  error: '',
+  error: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -25,36 +25,40 @@ export default function reducer(state = initialState, action = {}) {
     case FETCH_CHAPTER:
       return {
         ...state,
+        error: false,
         isFetchingChapter: true,
       }
     case FETCH_ALL_CHAPTERS:
       return {
         ...state,
+        error: false,
         isFetchingAllChapters: true,
       }
     case FETCH_ALL_CHAPTER_SUCCESS:
       return {
         ...state,
         chapters: action.payload,
+        error: false,
         isFetchingAllChapters: false,
       }
     case FETCH_CHAPTER_SUCCESS:
       return {
         ...state,
         surah: action.payload,
+        error: false,
         isFetchingChapter: false,
       }
     case FETCH_ALL_CHAPTER_FAIL:
       return {
         ...state,
         isFetchingAllChapters: false,
-        error: action.payload,
+        error: true,
       }
     case FETCH_CHAPTER_FAIL:
       return {
         ...state,
         isFetchingChapter: false,
-        error: action.payload,
+        error: true,
       }
     default:
       return state;
