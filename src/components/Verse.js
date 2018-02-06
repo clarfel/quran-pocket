@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, ImageBackground, Text, StyleSheet } from 'react-native';
+import { View, ImageBackground, Text, StyleSheet, ViewPropTypes } from 'react-native';
 import { toArabicNumber } from '../utils/arabicText';
 
 const styles = StyleSheet.create({
@@ -96,7 +96,7 @@ class Verse extends Component {
 
 Verse.propTypes = {
   data: PropTypes.object.isRequired,
-  style: View.propTypes.style,
+  style: ViewPropTypes.style,
   theme: PropTypes.bool,
 };
 

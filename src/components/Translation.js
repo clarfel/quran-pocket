@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ViewPropTypes } from 'react-native';
 
 const styles = StyleSheet.create({
   tafsirContainer: {
@@ -30,7 +30,7 @@ class Translation extends Component {
 
 Translation.propTypes = {
   data: PropTypes.string.isRequired,
-  style: View.propTypes.style,
+  style: ViewPropTypes.style,
   theme: PropTypes.bool,
 };
 

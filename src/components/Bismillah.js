@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ViewPropTypes } from 'react-native';
 
 const Bismillah = ({ style }) => {
   return (
@@ -11,7 +11,7 @@ const Bismillah = ({ style }) => {
 };
 
 Bismillah.propTypes = {
-  style: View.propTypes.style,
+  style: ViewPropTypes.style,
 };
 
 Bismillah.defaultProps = {
